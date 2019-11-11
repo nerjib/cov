@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: true,
 });
 
 // const connectionString = 'postgressql://me1:pass@127.0.0.1:5432/teamwork';

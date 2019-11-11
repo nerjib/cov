@@ -31,5 +31,17 @@
     "start": "node server.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nerjib/cov.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/nerjib/cov/issues"
+  },
+  "homepage": "https://github.com/nerjib/cov#readme"
 }
