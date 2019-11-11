@@ -1,31 +1,31 @@
+/* eslint-disable no-shadow */
+/* eslint-disable arrow-body-style */
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
-
- const hashPassword=(password)=> {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
-  };
+const hashPassword = (password) => {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
+};
   // compare password
- const  comparePassword = (hashPassword, password) => {
-    return bcrypt.compareSync(password, hashPassword);
-  };
+const comparePassword = (hashPassword, password) => {
+  return bcrypt.compareSync(password, hashPassword);
+};
 
- const isValidEmail = (email) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
+const isValidEmail = (email) => {
+  return /\S+@\S+\.\S+/.test(email);
+};
 
- const generateToken = (id) => {
-    const token = jwt.sign({
-      userId: id,
-    },
-    process.env.SECRET, { expiresIn: '7d' });
-    return token;
-  };
+const generateToken = (id) => {
+  const token = jwt.sign({
+    userId: id,
+  },
+  process.env.SECRET, { expiresIn: '7d' });
+  return token;
+};
 
 module.exports = {
-hashPassword,
-comparePassword,
-isValidEmail,
-generateToken
+  hashPassword,
+  comparePassword,
+  isValidEmail,
+  generateToken,
 };
