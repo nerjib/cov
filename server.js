@@ -4,7 +4,12 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const User = require('./src/users');
+const dotenv = require('dotenv');
+const Articles = require('./src/Articles');
+const Users = require('./src/Users');
+const Auth = require('./src/Auth');
+
+dotenv.config();
 
 
 const app = express();
@@ -17,8 +22,18 @@ app.use(bodyParser.json({ type: 'application/json' }));
 app.get('/', function (req, res) {
   res.send('wecome');
 });
-app.get('/user', User.getAll);
-app.post('/user', User.createUser);
+app.get('/api/v1/articles/me', Auth.verifyToken, Articles.getMyArticles);
+app.post('/api/v1/articles', Auth.verifyToken, Articles.create);
+app.get('/api/v1/articles', Auth.verifyToken, Articles.getAll);
+app.get('/api/v1/articles/:id', Auth.verifyToken, Articles.getOne);
+app.post('/api/v1/articles/:id/comments', Auth.verifyToken, Articles.postComments);
+app.delete('/api/v1/articles/:id', Auth.verifyToken, Articles.deleteArticle);
+app.get('/api/v1/articles/:id/comments/', Auth.verifyToken, Articles.getOneComments);
+app.put('/api/v1/articles/:id', Auth.verifyToken, Articles.updateArticles);
+app.post('/api/v1/auth/signin', Users.login);
+app.get('/api/v1/users', Users.getAll);
+app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
+app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
 
 app.listen(3000);
 console.log('connected 3000');

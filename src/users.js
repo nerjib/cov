@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 
 const dotenv = require('dotenv');
 const moment = require('moment');
@@ -46,12 +47,7 @@ async function createUser(req, res) {
     return res.status(400).send(error);
   }
 }
-/**
-     * Create A User
-     * @param {object} req
-     * @param {object} res
-     * @returns {object} reflection object
-     */
+
 async function getAll(req, res) {
   const getAllQ = 'SELECT * FROM users';
   try {
@@ -66,7 +62,71 @@ async function getAll(req, res) {
   }
 }
 
+
+// Login
+async function login(req, res) {
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).send({ message: 'Some values are missing' });
+  }
+  if (!Helper.isValidEmail(req.body.email)) {
+    return res.status(400).send({ message: 'Please enter a valid email address' });
+  }
+  const text = 'SELECT * FROM users WHERE username = $1';
+  try {
+    const { rows } = await db.query(text, [req.body.username]);
+    if (!rows[0]) {
+      return res.status(400).send({ message: 'user not found, check the username' });
+    }
+    console.log(rows[0].pword);
+    if (!Helper.comparePassword(rows[0].pword, req.body.password)) {
+      return res.status(400).send({ message: 'The credentials you provided is incorrect' });
+    }
+    const token1 = Helper.generateToken(rows[0].id);
+    const data = {
+      status: 'success',
+      data: {
+        token: token1,
+        userId: rows[0].id,
+      },
+    };
+    return res.status(200).send({ status: 'success', data });
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+}
+// view single member
+async function getOne(req, res) {
+  const text = 'SELECT * FROM users WHERE username = $1';
+  console.log(req.params.id);
+  try {
+    const { rows } = await db.query(text, [req.params.id]);
+    if (!rows[0]) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    return res.status(200).send(rows[0]);
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+}
+
+// delete user
+async function deleteUser(req, res) {
+  const deleteQuery = 'DELETE FROM users WHERE username=$1 returning *';
+  try {
+    const { rows } = await db.query(deleteQuery, [req.params.id]);
+    if (!rows[0]) {
+      return res.status(404).send({ message: 'user not found' });
+    }
+    return res.status(204).send({ message: 'deleted' });
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   getAll,
+  getOne,
   createUser,
+  deleteUser,
+  login,
 };
