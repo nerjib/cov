@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const moment = require('moment');
-const db = require('../db');
+const db = require('./query');
 
 // post new articles
 async function create(req, res) {
