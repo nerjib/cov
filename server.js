@@ -17,6 +17,8 @@ app.use(bodyParser.json({ type: 'application/json' }));
 app.get('/', function (req, res) {
   res.send('wecome');
 });
+app.get('/user', User.getAll);
+app.post('/user', User.createUser);
 
 app.listen(3000);
 console.log('connected 3000');

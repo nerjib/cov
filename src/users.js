@@ -1,15 +1,14 @@
 
-const { Pool } = require('pg');
 const dotenv = require('dotenv');
+const moment = require('moment');
 const db = require('./query.js');
-const moment = require ('moment');
 const Helper = require('./helper');
 
 
 dotenv.config();
 
 
-//create user
+// create user
 async function createUser(req, res) {
   if (!req.body.username || !req.body.password) {
     return res.status(400).send({ message: 'Some values are missing' });
@@ -46,30 +45,28 @@ async function createUser(req, res) {
   } catch (error) {
     return res.status(400).send(error);
   }
-};
-
-    /**
+}
+/**
      * Create A User
-     * @param {object} req 
+     * @param {object} req
      * @param {object} res
-     * @returns {object} reflection object 
+     * @returns {object} reflection object
      */
- async function  getAll(req, res){
-      const getAllQ = 'SELECT * FROM users';
-      try {
-        // const { rows } = qr.query(getAllQ);
+async function getAll(req, res) {
+  const getAllQ = 'SELECT * FROM users';
+  try {
+  // const { rows } = qr.query(getAllQ);
+    const { rows } = await db.query(getAllQ);
+    return res.status(201).send(rows);
+  } catch (error) {
+    if (error.routine === '_bt_check_unique') {
+      return res.status(400).send({ message: 'User with that EMAIL already exist' });
+    }
+    return res.status(400).send(`${error} jsh`);
+  }
+}
 
-        const { rows }  = await db.query(getAllQ);
-        return res.status(201).send(rows);
-      } catch(error) {
-        if (error.routine === '_bt_check_unique') {
-          return res.status(400).send({ 'message': 'User with that EMAIL already exist' })
-        }
-        return res.status(400).send(error+ " jsh");
-      }
-    };
- 
-  module.exports = {
-      getAll,
-      createUser
-  };
+module.exports = {
+  getAll,
+  createUser,
+};
