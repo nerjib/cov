@@ -11,6 +11,8 @@ const Auth = require('./src/Auth');
 
 dotenv.config();
 
+const PORT = process.env.PORT || 3000;
+
 
 const app = express();
 app.use(express.json());
@@ -24,7 +26,7 @@ app.get('/', function (req, res) {
 });
 app.get('/api/v1/articles/me', Auth.verifyToken, Articles.getMyArticles);
 app.post('/api/v1/articles', Auth.verifyToken, Articles.create);
-app.get('/api/v1/articles', Auth.verifyToken, Articles.getAll);
+app.get('/api/v1/feeds', Auth.verifyToken, Articles.getAll);
 app.get('/api/v1/articles/:id', Auth.verifyToken, Articles.getOne);
 app.post('/api/v1/articles/:id/comments', Auth.verifyToken, Articles.postComments);
 app.delete('/api/v1/articles/:id', Auth.verifyToken, Articles.deleteArticle);
@@ -35,8 +37,8 @@ app.get('/api/v1/users', Users.getAll);
 app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
 app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
 
-app.listen(3000);
-console.log('connected 3000');
+app.listen(PORT);
+console.log(`connected ${PORT}`);
 
 module.exports = {
   app,

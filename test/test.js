@@ -2,14 +2,25 @@
 
 // import app from '../server';
 
+
 const chaiHttp = require('chai-http');
 const chai = require('chai');
 const { app } = require('../server');
+const db = require('../src/query');
+
 // const should = chai.should();
 afterAll(() => setTimeout(() => process.exit(), 1000));
 
 chai.use(chaiHttp);
 chai.should();
+/*
+// eslint-disable-next-line prefer-destructuring
+const expect = require('chai').expect;
+
+const request = require('superset');
+const { app } = require('../server');
+const db = require('../src/query');
+*/
 
 const data = {
   fname: 'Najib',
@@ -27,6 +38,16 @@ const data = {
 };
 
 describe('Users', () => {
+  before((done) => {
+    db.pool.connect()
+      .then(() => done())
+      .catch((err) => done(err));
+  });
+  after((done) => {
+    db.pool.end()
+      .then(() => done())
+      .catch((err) => done(err));
+  });
   describe('get /', () => {
     it('should get all users', async (done) => {
       chai.request(app)
@@ -52,3 +73,26 @@ describe('Users', () => {
     });
   });
 });
+/*
+describe('pos', () => {
+  before((done) => {
+    db.pool.connect()
+      .then(() => done())
+      .catch((err) => done(err));
+  });
+  after((done) => {
+    db.pool.end()
+      .then(() => done())
+      .catch((err) => done(err));
+  });
+  it('dk', (done) => {
+    request(app.post('/api/v1/users'))
+      .send(data)
+      .then((res) => {
+        const body = res.body;
+        expect(body).to.contain.property('id');
+      });
+    done();
+  });
+});
+*/
