@@ -10,7 +10,7 @@ async function verifyToken(req, res, next) {
     return res.status(400).send({ message: 'Token is not provided' });
   }
   try {
-    const decoded = await jwt.verify(token, process.env.SECRET);
+    const decoded = await jwt.verify(token, 'secret');
     console.log(decoded);
     const text = 'SELECT * FROM users WHERE id = $1';
     const { rows } = await db.query(text, [decoded.userId]);
