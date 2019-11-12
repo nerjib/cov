@@ -5,8 +5,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const Users = require('./src/users');
 const Articles = require('./src/Articles');
-const Users = require('./src/Users');
 const Auth = require('./src/Auth');
 
 dotenv.config();
