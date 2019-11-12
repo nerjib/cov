@@ -130,7 +130,7 @@ async function login(req, res) {
       },
     };
 
-    return res.status(200).json(data);
+    return res.status(200).send(data);
   } catch (error) {
     return res.status(400).send(error);
   }
