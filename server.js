@@ -6,7 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const Articles = require('./src/Articles');
-// const Users = require('./src/Users');
+const Users = require('./src/Users');
 const Auth = require('./src/Auth');
 
 dotenv.config();
@@ -35,7 +35,7 @@ app.get('/api/v1/articles/:id/comments/', Articles.getOneComments);
 app.put('/api/v1/articles/:id', Auth.verifyToken, Articles.updateArticles);
 // app.post('/api/v1/auth/signin', Users.login);
 
-// app.get('/api/v1/users', Users.getAll);
+app.get('/api/v1/users', Users.getAll);
 // app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
 // app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
 

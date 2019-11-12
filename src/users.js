@@ -1,12 +1,10 @@
 /* eslint-disable no-console */
 
-const dotenv = require('dotenv');
+// const dotenv = require('dotenv');
+
 const moment = require('moment');
 const db = require('./query.js');
 const Helper = require('./helper');
-
-
-dotenv.config();
 
 
 // create user
