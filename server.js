@@ -25,9 +25,9 @@ app.get('/', function (req, res) {
   res.send('wecome');
 });
 
-/* 
-app.get('/api/v1/articles/me', Auth.verifyToken, Articles.getMyArticles);
+// app.get('/api/v1/articles/me', Auth.verifyToken, Articles.getMyArticles);
 app.post('/api/v1/articles', Auth.verifyToken, Articles.create);
+/*
 app.get('/api/v1/feeds', Auth.verifyToken, Articles.getAll);
 app.get('/api/v1/articles/:id', Auth.verifyToken, Articles.getOne);
 app.post('/api/v1/articles/:id/comments', Auth.verifyToken, Articles.postComments);
@@ -36,7 +36,7 @@ app.get('/api/v1/articles/:id/comments/', Auth.verifyToken, Articles.getOneComme
 app.put('/api/v1/articles/:id', Auth.verifyToken, Articles.updateArticles);
 app.post('/api/v1/auth/signin', Users.login);
 */
-app.get('/api/v1/users', Users.getAll);
+// app.get('/api/v1/users', Users.getAll);
 // app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
 // app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
 
