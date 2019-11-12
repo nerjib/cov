@@ -130,8 +130,15 @@ async function getOne(req, res) {
     if (!rows[0]) {
       return res.status(404).send({ message: 'Article Not found' });
     }
-    const { artRows } = await db.query(articleComment, [req.params.id]);
-    return res.status(200).send({ messagE: 'success', artRows });
+    const artRows = await db.query(articleComment, [req.params.id]);
+    const data = {
+      status: 'success',
+      data: {
+        rows,
+        comments: artRows.rows,
+      },
+    };
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(400).send(error);
   }
@@ -157,7 +164,7 @@ async function getOneComments(req, res) {
     if (!rows[0]) {
       return res.status(404).send({ message: 'User not found' });
     }
-    return res.status(200).send(rows[0]);
+    return res.status(200).send(rows);
   } catch (error) {
     return res.status(400).send(error);
   }
