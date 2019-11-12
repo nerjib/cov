@@ -120,17 +120,17 @@ async function login(req, res) {
     if (!Helper.comparePassword(rows[0].pword, req.body.password)) {
       return res.status(400).send({ message: 'The credentials you provided is incorrect' });
     }
-    /*
-    const token = Helper.generateToken(rows[0].id);
-       const data = {
+    const k = JSON.parse(rows[0].id);
+    const token = Helper.generateToken(k);
+    const data = {
       status: 'success',
       data: {
-        token: token,
-        userId: rows[0].id,
+        token,
+        userId: k,
       },
     };
-    */
-    return res.status(200).json(rows[0].id);
+
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(400).send(error);
   }
