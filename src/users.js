@@ -121,7 +121,7 @@ async function login(req, res) {
       return res.status(400).send({ message: 'The credentials you provided is incorrect' });
     }
     // const k = (rows[0].id);
-    const token = Helper.generateToken(rows[0].id);
+    const token = Helper.generateToken(1);
     const data = {
       status: 'success',
       data: {
