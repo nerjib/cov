@@ -75,12 +75,13 @@ async function createUser(req, res) {
   try {
     const { rows } = await db.query(createQuery, values);
     const token = Helper.generateToken(rows[0].id);
-    return res.status(201).send({ token });
+    console.log(`this is the token ${token}`);
+    return res.status(201).send(token);
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
       return res.status(400).send({ message: 'User with that EMAIL already exist' });
     }
-    return res.status(400).send(error);
+    return res.status(200).send(error);
   }
 }
 
