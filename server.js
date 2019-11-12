@@ -37,7 +37,7 @@ app.post('/api/v1/auth/signin', Users.login);
 
 app.get('/api/v1/users', Auth.verifyToken, Users.getAll);
 app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
-app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
+app.post('/api/v1/auth/create-user', Users.createUser);
 
 
 app.listen(PORT);
