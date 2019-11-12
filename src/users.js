@@ -126,6 +126,7 @@ async function login(req, res) {
       status: 'success',
       data: {
         id: rows[0].id,
+        token: req.user.id,
       },
     };
 
