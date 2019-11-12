@@ -40,7 +40,7 @@ async function createUser(req, res) {
         userId: rows[0].id,
       },
     };
-    return res.status(201).send(data);
+    return res.status(201).json(data);
   } catch (error) {
     return res.status(400).send(error);
   }
@@ -63,6 +63,8 @@ async function getAll(req, res) {
 
 // Login
 async function login(req, res) {
+  console.log(req.body.email);
+  console.log(req.body.password);
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ message: 'Some values are missing' });
   }
