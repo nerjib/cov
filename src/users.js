@@ -76,7 +76,7 @@ async function createUser(req, res) {
     const { rows } = await db.query(createQuery, values);
     // const token = Helper.generateToken(rows[0].id);
     // console.log(`this is the token ${token}`);
-    return res.status(201).send(rows);
+    return res.status(201).json(rows);
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
       return res.status(400).send({ message: 'User with that username already exist' });
@@ -130,7 +130,7 @@ async function login(req, res) {
       },
     };
     */
-    return res.status(200).send('token');
+    return res.status(200).json(rows[0].id);
   } catch (error) {
     return res.status(400).send(error);
   }
