@@ -74,7 +74,7 @@ async function createUser(req, res) {
 
   try {
     const { rows } = await db.query(createQuery, values);
-    const token = Helper.generateToken(rows[0].id);
+    // const token = Helper.generateToken(rows[0].id);
     // console.log(`this is the token ${token}`);
     return res.status(201).send(rows);
   } catch (error) {
@@ -120,15 +120,17 @@ async function login(req, res) {
     if (!Helper.comparePassword(rows[0].pword, req.body.password)) {
       return res.status(400).send({ message: 'The credentials you provided is incorrect' });
     }
+    /*
     const token = Helper.generateToken(rows[0].id);
-    const data = {
+       const data = {
       status: 'success',
       data: {
         token: token,
         userId: rows[0].id,
       },
     };
-    return res.status(200).send(token);
+    */
+    return res.status(200).send('token');
   } catch (error) {
     return res.status(400).send(error);
   }
