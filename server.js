@@ -5,9 +5,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const Articles = require('./src/Articles');
-const Users = require('./src/Users');
-const Auth = require('./src/Auth');
+// const Articles = require('./src/Articles');
+// const Users = require('./src/Users');
+// const Auth = require('./src/Auth');
 
 dotenv.config();
 
@@ -37,10 +37,11 @@ app.post('/api/v1/auth/signin', Users.login);
 app.get('/api/v1/users', Users.getAll);
 app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
 app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
+*/
 
 app.listen(PORT);
 console.log(`connected ${PORT}`);
-*/
+
 module.exports = {
   app,
 };
