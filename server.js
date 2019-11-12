@@ -6,7 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const Articles = require('./src/Articles');
-const Users = require('./src/Users');
+// const Users = require('./src/Users');
 const Auth = require('./src/Auth');
 
 dotenv.config();
