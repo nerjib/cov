@@ -59,7 +59,7 @@ async function createUser(req, res) {
   const createQuery = `INSERT INTO
     users(fname, lname, username, pword, email, role, dept, address, created_date)
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
-    returning *`;
+    RETURNING *`;
   const values = [
     req.body.fname,
     req.body.lname,
@@ -74,14 +74,14 @@ async function createUser(req, res) {
 
   try {
     const { rows } = await db.query(createQuery, values);
-    const token = Helper.generateToken(rows[0].id);
-    console.log(`this is the token ${token}`);
-    return res.status(201).send(token);
+    // const token = Helper.generateToken(rows[0].id);
+    // console.log(`this is the token ${token}`);
+    return res.status(201).send(rows);
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
       return res.status(400).send({ message: 'User with that EMAIL already exist' });
     }
-    return res.status(200).send(error);
+    return res.status(201).send(error);
   }
 }
 
