@@ -1,12 +1,12 @@
 /* eslint-disable arrow-body-style */
 const { Pool } = require('pg');
-// const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 
-// dotenv.config();
+dotenv.config();
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: true,
+  // ssl: true,
 });
 
 pool.connect();
