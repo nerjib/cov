@@ -74,12 +74,12 @@ async function createUser(req, res) {
 
   try {
     const { rows } = await db.query(createQuery, values);
-    // const token = Helper.generateToken(rows[0].id);
+    const token = Helper.generateToken(rows[0].id);
     // console.log(`this is the token ${token}`);
-    return res.status(201).send(rows);
+    return res.status(201).send({ status: 'success', token });
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
-      return res.status(400).send({ message: 'User with that EMAIL already exist' });
+      return res.status(400).send({ message: 'User with that username already exist' });
     }
     return res.status(201).send(error);
   }
@@ -128,7 +128,7 @@ async function login(req, res) {
         userId: rows[0].id,
       },
     };
-    return res.status(200).send({ status: 'success', data });
+    return res.status(200).send({ status: 'success', token1 });
   } catch (error) {
     return res.status(400).send(error);
   }
