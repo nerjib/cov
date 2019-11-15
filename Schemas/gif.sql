@@ -6,5 +6,4 @@ CREATE TABLE IF NOT EXISTS
         gifUrl TEXT NOT NULL,
         createdOn TIMESTAMP,
         FOREIGN KEY (userId) REFERENCES users(id)
-
       )
