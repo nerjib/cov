@@ -49,6 +49,18 @@ async function createUser(req, res) {
 */
 
 async function createUser(req, res) {
+  try {
+    const { rows } = await db.query(text, [req.user.id]);
+    console.log(req.user.id);
+    console.log(rows);
+    if (!(rows[0].role === 'admin')) {
+      return res.status(301).send('you are not elegible to create user');
+    }
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+
+
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ message: 'Some values are missing' });
   }
@@ -110,9 +122,9 @@ async function login(req, res) {
   if (!Helper.isValidEmail(req.body.email)) {
     return res.status(400).send({ message: 'Please enter a valid email address' });
   }
-  const text = 'SELECT * FROM users WHERE username = $1';
+  const text = 'SELECT * FROM users WHERE email = $1';
   try {
-    const { rows } = await db.query(text, [req.body.username]);
+    const { rows } = await db.query(text, [req.body.email]);
     if (!rows[0]) {
       return res.status(400).send({ message: 'user not found, check the username' });
     }

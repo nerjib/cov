@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable arrow-body-style */
 const { Pool } = require('pg');
 const dotenv = require('dotenv');

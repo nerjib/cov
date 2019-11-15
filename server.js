@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
@@ -21,6 +22,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
 
+app.use('/uploads', express.static('uploads'));
+// HANDLING CORS ERRORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  if (req.method === 'OPTIONS') {
+    res.headers('Access-Control-Allow-Methods', 'POST, PUT, GET, DELETE');
+    return res.status(200).json({});
+  }
+  next();
+});
+
 app.get('/', function (req, res) {
   res.send('wecome');
 });
@@ -37,7 +50,7 @@ app.post('/api/v1/auth/signin', Users.login);
 
 app.get('/api/v1/users', Auth.verifyToken, Users.getAll);
 app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
-app.post('/api/v1/auth/create-user', Users.createUser);
+app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
 
 
 app.listen(PORT);
