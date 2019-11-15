@@ -49,6 +49,10 @@ async function createUser(req, res) {
 */
 
 async function createUser(req, res) {
+  // check if user is admin
+  // console.log(req.user.id);
+  // console.log(req.user.id);
+  const text = 'SELECT * FROM users WHERE id = $1';
   try {
     const { rows } = await db.query(text, [req.user.id]);
     console.log(req.user.id);
@@ -59,8 +63,7 @@ async function createUser(req, res) {
   } catch (error) {
     return res.status(400).send(error);
   }
-
-
+  //
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ message: 'Some values are missing' });
   }
@@ -96,6 +99,7 @@ async function createUser(req, res) {
     return res.status(201).send(error);
   }
 }
+
 
 async function getAll(req, res) {
   const getAllQ = 'SELECT * FROM users';
