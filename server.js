@@ -23,6 +23,7 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
+
 cloudinary.config({
   cloud_name: 'nerjib',
   api_key: '626821658299598',
@@ -65,7 +66,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', function (req, res) {
-  res.send('wecome');
+  res.send('wellcome');
 });
 
 // app.get('/api/v1/articles/me', Auth.verifyToken, Articles.getMyArticles);
@@ -87,7 +88,6 @@ app.delete('/api/v1/gifs/:id', Auth.verifyToken, Gifs.deleteGif);
 app.post('/api/v1/gifs/:id/comments', Auth.verifyToken, Gifs.postComments);
 app.post('/api/v1/gifs', upload.single('image'), Auth.verifyToken, (req, res, next) => {
   cloudinary.uploader.upload(req.file.path, function (result) {
-    // add cloudinary url for the image to the campground object under image property
     // return res.status(201).send(result.secure_url);
     Gifs.createGif(req, res, result.secure_url);
   });

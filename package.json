@@ -29,10 +29,12 @@
   "scripts": {
     "lint": "eslint '**/*.js'",
     "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "test1": "./node_modules/mocha/bin/mocha ./test/test*",
+    "test1": "node ./node_modules/mocha/bin/mocha ./test/test*",
     "test2": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test3": "jest --detectOpenHandles",
+    "test8": "mocha test/*.js --exit"
   },
   "author": "",
   "license": "ISC",
