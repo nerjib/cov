@@ -79,9 +79,9 @@ app.get('/api/v1/articles/:id/comments/', Auth.verifyToken, Articles.getOneComme
 app.put('/api/v1/articles/:id', Auth.verifyToken, Articles.updateArticles);
 app.post('/api/v1/auth/signin', Users.login);
 
-app.get('/api/v1/users', Auth.verifyToken, Users.getAll);
+app.get('/api/v1/users', Auth.verifyAdmin, Users.getAll);
 app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
-app.post('/api/v1/auth/create-user', Auth.verifyToken, Users.createUser);
+app.post('/api/v1/auth/create-user', Auth.verifyToken, Auth.verifyAdmin, Users.createUser);
 app.get('/api/v1/gifs', Auth.verifyToken, Gifs.getAll);
 app.get('/api/v1/gifs/:id', Auth.verifyToken, Gifs.getOne);
 app.delete('/api/v1/gifs/:id', Auth.verifyToken, Gifs.deleteGif);

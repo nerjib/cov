@@ -53,17 +53,6 @@ async function createUser(req, res) {
   // console.log(req.user.id);
   // console.log(req.user.id);
   const text = 'SELECT * FROM users WHERE id = $1';
-  try {
-    const { rows } = await db.query(text, [req.user.id]);
-    console.log(req.user.id);
-    console.log(rows);
-    if (!(rows[0].role === 'admin')) {
-      return res.status(301).send('you are not elegible to create user');
-    }
-  } catch (error) {
-    return res.status(400).send(error);
-  }
-  //
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ message: 'Some values are missing' });
   }
@@ -91,7 +80,7 @@ async function createUser(req, res) {
     const { rows } = await db.query(createQuery, values);
     // const token = Helper.generateToken(rows[0].id);
     // console.log(`this is the token ${token}`);
-    return res.status(201).json(rows);
+    return res.status(201).json(rows[0]);
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
       return res.status(400).send({ message: 'User with that username already exist' });
@@ -118,8 +107,8 @@ async function getAll(req, res) {
 
 // Login
 async function login(req, res) {
-  console.log(req.body.email);
-  console.log(req.body.password);
+  // console.log(req.body.email);
+  // console.log(req.body.password);
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ message: 'Some values are missing' });
   }
@@ -137,7 +126,7 @@ async function login(req, res) {
       return res.status(400).send({ message: 'The credentials you provided is incorrect' });
     }
     // const k = (rows[0].id);
-    const token1 = Helper.generateToken(rows[0].id);
+    const token1 = Helper.generateToken(rows[0].id, rows[0].role);
     const data = {
       status: 'success',
       data: {
