@@ -34,7 +34,9 @@
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "start": "node server.js",
     "test3": "jest --detectOpenHandles",
-    "test8": "mocha test/*.js --exit"
+    "test8": "mocha test/*.js --exit",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "",
   "license": "ISC",
