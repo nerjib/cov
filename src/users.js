@@ -80,7 +80,18 @@ async function createUser(req, res) {
     const { rows } = await db.query(createQuery, values);
     // const token = Helper.generateToken(rows[0].id);
     // console.log(`this is the token ${token}`);
-    return res.status(201).json(rows[0]);
+    const token1 = Helper.generateToken(rows[0].id, rows[0].role);
+    const data = {
+      status: 'success',
+      data: {
+        message: 'User account successfully created',
+        token: token1,
+        userId: rows[0].id,
+        email: rows[0].email,
+        username: rows[0].username,
+      },
+    };
+    return res.status(201).json(data);
   } catch (error) {
     if (error.routine === '_bt_check_unique') {
       return res.status(400).send({ message: 'User with that username already exist' });
