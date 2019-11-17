@@ -123,6 +123,7 @@ async function login(req, res) {
   if (!req.body.email || !req.body.password) {
     return res.status(400).send({ message: 'Some values are missing' });
   }
+  console.log('eeee '+res.body);
   if (!Helper.isValidEmail(req.body.email)) {
     return res.status(400).send({ message: 'Please enter a valid email address' });
   }
@@ -132,7 +133,7 @@ async function login(req, res) {
     if (!rows[0]) {
       return res.status(400).send({ message: 'user not found, check the username' });
     }
-    console.log(rows[0].pword);
+    // console.log(rows[0].pword);
     if (!Helper.comparePassword(rows[0].pword, req.body.password)) {
       return res.status(400).send({ message: 'The credentials you provided is incorrect' });
     }

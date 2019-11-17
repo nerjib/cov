@@ -10,4 +10,6 @@ CREATE TABLE IF NOT EXISTS
         dept VARCHAR(100) NOT NULL,
         address VARCHAR(255) NULL,
         created_date TIMESTAMP
-      )
+      );
+
+      INSERT INTO users (fName, username, pword, email, dept) VALUES('me', 'me1', '11', 'nk@gmaisl.com','it');

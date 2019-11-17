@@ -5,12 +5,12 @@ const chai = require('chai');
 const { app } = require('../server');
 // Configure chai
 
-const data1 = {
+const data = {
   fname: 'Najib',
   lname: 'Lere',
-  username: 'meddds1',
+  username: 'me1',
   password: '11',
-  email: 'medddssd@me.com',
+  email: 'nk@gmaisl.com',
   role: '',
   dept: 'IT',
   address: 'KD',
@@ -19,20 +19,6 @@ const data1 = {
   gifurl: 'gifcom',
   comment: 'im in for this ok.',
 };
-const data = {
-    fname: 'Najib',
-    lname: 'Lere',
-    username: 'mdderkc367e',
-    password: '11',
-    email: 'nkrca@gmdcdaisel.com',
-    role: '',
-    dept: 'IT',
-    address: 'KD',
-    title: 'I need help on Linting',
-    article: 'Errors on new line',
-    gifurl: 'gifcom',
-    comment: 'im in for this ok.',
-  };
 chai.use(chaiHttp);
 chai.should();
 let auth = {};
@@ -51,14 +37,15 @@ describe('Sign /', () => {
   });
 });
 
+/*
 describe('Post /', () => {
 
   it('trying to  add user that exist', (done) => {
-    console.log(auth);
+    // console.log(auth);
     chai.request(app)
       .post('/api/v1/auth/create-user')
-      .send('x-access-token', auth)
-      .send(data1)
+      .send('token', auth)
+      .send(data)
       .end((err, res) => {
         res.status.should.be.equal(201);
         done();
