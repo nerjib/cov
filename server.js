@@ -50,7 +50,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
 
@@ -60,13 +60,13 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', '*');
   if (req.method === 'OPTIONS') {
     res.headers('Access-Control-Allow-Methods', 'POST, PUT, GET, DELETE');
-    return res.status(200).json({});
+    return res.status(200).json({ ff: 'c' });
   }
   next();
 });
 
-app.get('/', function (req, res) {
-  res.send('wellcome');
+app.get('/', (req, res) => {
+  res.json('wellcome');
 });
 
 // app.get('/api/v1/articles/me', Auth.verifyToken, Articles.getMyArticles);
@@ -81,7 +81,7 @@ app.post('/api/v1/auth/signin', Users.login);
 
 app.get('/api/v1/users', Auth.verifyAdmin, Users.getAll);
 app.delete('/api/v1/users/me', Auth.verifyToken, Users.deleteUser);
-app.post('/api/v1/auth/create-user', Auth.verifyToken, Auth.verifyAdmin, Users.createUser);
+app.post('/api/v1/auth/create-user', Users.createUser);
 app.get('/api/v1/gifs', Auth.verifyToken, Gifs.getAll);
 app.get('/api/v1/gifs/:id', Auth.verifyToken, Gifs.getOne);
 app.delete('/api/v1/gifs/:id', Auth.verifyToken, Gifs.deleteGif);

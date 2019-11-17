@@ -121,21 +121,21 @@ async function login(req, res) {
   // console.log(req.body.email);
   // console.log(req.body.password);
   if (!req.body.email || !req.body.password) {
-    return res.status(400).send({ message: 'Some values are missing' });
+    return res.status(400).json({ message: 'Some values are missing' });
   }
   console.log('eeee '+res.body);
   if (!Helper.isValidEmail(req.body.email)) {
-    return res.status(400).send({ message: 'Please enter a valid email address' });
+    return res.status(400).json({ message: 'Please enter a valid email address' });
   }
   const text = 'SELECT * FROM users WHERE email = $1';
   try {
     const { rows } = await db.query(text, [req.body.email]);
     if (!rows[0]) {
-      return res.status(400).send({ message: 'user not found, check the username' });
+      return res.status(400).json({ message: 'user not found, check the username' });
     }
     // console.log(rows[0].pword);
     if (!Helper.comparePassword(rows[0].pword, req.body.password)) {
-      return res.status(400).send({ message: 'The credentials you provided is incorrect' });
+      return res.status(400).json({ message: 'The credentials you provided is incorrect' });
     }
     // const k = (rows[0].id);
     const token1 = Helper.generateToken(rows[0].id, rows[0].role);
